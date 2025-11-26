@@ -39,4 +39,8 @@ public class Member extends BaseEntity {
         this.goalsCalories = goalsCalories;
         this.role = role;
     }
+
+    public void updateGoalsCalories(Integer goalsCalories) {
+        this.goalsCalories = goalsCalories;
+    }
 }
