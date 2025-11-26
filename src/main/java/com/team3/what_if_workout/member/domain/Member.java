@@ -29,15 +29,11 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Integer goalsCalories;
 
-    @Column(nullable = false)
-    private String role;
-
     @Builder
-    public Member(String id, String password, Integer goalsCalories, String role) {
+    public Member(String id, String password, Integer goalsCalories) {
         this.id = id;
         this.password = password;
         this.goalsCalories = goalsCalories;
-        this.role = role;
     }
 
     public void updateGoalsCalories(Integer goalsCalories) {
