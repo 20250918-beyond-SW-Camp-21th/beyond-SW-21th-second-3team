@@ -1,7 +1,7 @@
 package com.team3.what_if_workout.member.service;
 
 import com.team3.what_if_workout.member.domain.Member;
-import com.team3.what_if_workout.member.dto.reqeust.SignupDTO;
+import com.team3.what_if_workout.member.dto.request.SignupDTO;
 import com.team3.what_if_workout.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
