@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Notification {
     @Id // PK
             @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +21,21 @@ public class Notification {
     String content; // 알림 내용
 
     @Column(nullable = false)
-    Long sendByUserID; // 보낸사람
+    Long sendByUserId; // 보낸사람
+
+    @Column
+    Boolean checkNotification =false ; // 알람 확인여부
+
+    @Builder
+    public Notification(Long sendByUserID, Long userId, String content) {
+        this.sendByUserId = sendByUserID;
+        this.userId = userId;
+        this.content = content;
+
+    }
+    public void update(Boolean check){
+        this.checkNotification = check;
+    }
+
+
 }

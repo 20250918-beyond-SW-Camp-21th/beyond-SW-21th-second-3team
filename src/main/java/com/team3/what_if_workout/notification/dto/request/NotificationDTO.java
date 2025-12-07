@@ -8,15 +8,15 @@ public record NotificationDTO(
         Long userID ,
         String content ,
         Long sendByUserId
+
 )
 {
     public Notification toEntity(){
         return Notification.builder()
-                .userId(this.userID)
-                .content(this.content)
-                .sendByUserID(this.sendByUserId)
+                .userId(userID)
+                .content(content)
+                .sendByUserID(sendByUserId)
                 .build();
-
     }
 
 
