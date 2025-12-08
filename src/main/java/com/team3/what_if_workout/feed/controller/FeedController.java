@@ -58,7 +58,7 @@ public class FeedController {
     }
 
     @Operation(summary = "피드 수정 API입니다.")
-    @PutMapping("/{feedId}")
+    @PatchMapping("/{feedId}")
     public ResponseEntity<Void> updateFeed(
             @PathVariable Long feedId,
             @RequestBody FeedUpdateDTO dto) {

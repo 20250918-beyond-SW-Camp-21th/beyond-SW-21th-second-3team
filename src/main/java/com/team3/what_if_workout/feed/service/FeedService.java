@@ -64,7 +64,7 @@ public class FeedService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 피드가 존재하지 않습니다."));
         // 본인 피드인지 검증 (Rule)
         if (!feed.getUserId().equals(userId)) {
-            throw new IllegalArgumentException("본인의 피드만 삭제할 수 있습니다.");
+            throw new IllegalStateException("본인의 피드만 삭제할 수 있습니다.");
         }
         feedRepository.delete(feed);
     }
