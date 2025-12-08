@@ -25,15 +25,14 @@ public class NotificationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(notificationService.createNotification(dto));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/notification/{id}")
     public ResponseEntity<Void> statusUpdate(@PathVariable Long id ){
         notificationService.updateCheck(id);
-
         return ResponseEntity.ok().build();
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/notification/{id}")
     public ResponseEntity<Void> deleteNotification(@PathVariable Long id){
         notificationService.deleteNotification(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
