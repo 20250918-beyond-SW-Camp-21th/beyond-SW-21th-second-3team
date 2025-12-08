@@ -11,8 +11,8 @@ public record AnswerResponseDTO(
     public static AnswerResponseDTO fromEntity(Answer answer) {
         return  new AnswerResponseDTO(
                 answer.getAnswerId(),
-                answer.getQuestionId(),
                 answer.getUserId(),
+                answer.getQuestionId(),
                 answer.getAnswerContent()
         );
     }

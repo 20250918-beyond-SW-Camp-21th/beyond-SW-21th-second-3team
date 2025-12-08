@@ -36,5 +36,10 @@ public class Answer {
         this.answerContent = answerContent;
     }
 
+    public void update(String answerContent){
+        if(answerContent != null){
+            this.answerContent = answerContent;
+        }
+    }
 
 }

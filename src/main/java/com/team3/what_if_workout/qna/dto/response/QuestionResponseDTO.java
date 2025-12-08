@@ -6,14 +6,16 @@ public record QuestionResponseDTO(
         Long questionId,
         Long userId,
         String questionTitle,
-        String questionContent
+        String questionContent,
+        boolean isAnswered
 ) {
     public static QuestionResponseDTO fromEntity(Question question) {
         return new QuestionResponseDTO(
                 question.getQuestionId(),
                 question.getUserId(),
                 question.getQuestionTitle(),
-                question.getQuestionContent()
+                question.getQuestionContent(),
+                question.isAnswered()
         );
     }
 }

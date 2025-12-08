@@ -25,6 +25,9 @@ public class Question {
     @Column(nullable = false)
     private Long userId; // Member.userId 참조 (FK)
 
+    @Column(nullable = false)
+    private boolean isAnswered = false;
+
     public void assignUserId(Long userId) {
         this.userId = userId;
     }
@@ -32,5 +35,20 @@ public class Question {
     public Question(String questionTitle, String questionContent) {
         this.questionTitle = questionTitle;
         this.questionContent = questionContent;
+        this.isAnswered = false;
+    }
+
+    public void update(String questionTitle, String questionContent) {
+        if (questionTitle != null) {
+            this.questionTitle = questionTitle;
+        }
+        if(questionContent != null) {
+            this.questionContent = questionContent;
+        }
+        //둘 다 null인 경우 아무변화도 일어나지 않음
+    }
+
+    public void markAsAnswered(){
+        this.isAnswered = true;
     }
 }
