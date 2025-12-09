@@ -1,7 +1,7 @@
 package com.team3.what_if_workout.member.controller;
 
 import com.team3.what_if_workout.member.domain.Member;
-import com.team3.what_if_workout.member.dto.reqeust.SignupDTO;
+import com.team3.what_if_workout.member.dto.request.SignupDTO;
 import com.team3.what_if_workout.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

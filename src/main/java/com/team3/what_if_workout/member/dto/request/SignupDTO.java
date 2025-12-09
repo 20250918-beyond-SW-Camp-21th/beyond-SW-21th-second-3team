@@ -1,10 +1,8 @@
-package com.team3.what_if_workout.member.dto.reqeust;
+package com.team3.what_if_workout.member.dto.request;
 
 import com.team3.what_if_workout.member.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 public record SignupDTO(
 
