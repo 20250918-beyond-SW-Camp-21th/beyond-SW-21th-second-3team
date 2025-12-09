@@ -23,15 +23,25 @@ public class Feed {
     @Column(nullable = false)
     private String feedContent;
 
+    private String imageUrl; //FeedImage.url 참조(FK)
+
     @Builder
-    public Feed(String feedTitle, String feedContent) {
+    public Feed(String feedTitle,
+                String feedContent,
+                String imageUrl) {
         this.feedTitle = feedTitle;
         this.feedContent = feedContent;
+        this.imageUrl = imageUrl;
     }
 
     public void assignUserId(Long userId) {
         this.userId = userId;
     }
+
+    public void attachImage(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 
     public void update(String feedTitle, String feedContent) {
         if (feedTitle != null) {
