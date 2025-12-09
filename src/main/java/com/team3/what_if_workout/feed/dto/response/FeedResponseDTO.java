@@ -6,7 +6,8 @@ public record FeedResponseDTO(
         Long feedId,
         Long userId,
         String feedTitle,
-        String feedContent
+        String feedContent,
+        String imageUrl
 ) {
 
     public static FeedResponseDTO fromEntity(Feed feed) {
@@ -14,7 +15,8 @@ public record FeedResponseDTO(
                 feed.getFeedId(),
                 feed.getUserId(),
                 feed.getFeedTitle(),
-                feed.getFeedContent()
+                feed.getFeedContent(),
+                feed.getImageUrl()
         );
     }
 }

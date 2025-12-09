@@ -5,6 +5,7 @@ import com.team3.what_if_workout.feed.dto.request.FeedCreateDTO;
 import com.team3.what_if_workout.feed.dto.request.FeedUpdateDTO;
 import com.team3.what_if_workout.feed.dto.response.FeedResponseDTO;
 import com.team3.what_if_workout.feed.service.FeedService;
+import io.minio.errors.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -12,9 +13,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -25,18 +31,19 @@ public class FeedController {
     private final FeedService feedService;
 
     @Operation(summary = "피드 작성 API입니다.")
-    @ApiResponse(responseCode = "201", description = "피드 생성 성공",
-            content = @Content(mediaType = "application/json",
-                    examples = @ExampleObject(
-                            name = "피드 생성 성공",
-                            value = "{ \"feedId\": 1, \"feedTitle\": \"오늘 운동\", \"feedContent\": \"가슴운동\" }"
-                    )))
+//    @ApiResponse(responseCode = "201", description = "피드 생성 성공",
+//            content = @Content(mediaType = "application/json",
+//                    examples = @ExampleObject(
+//                            name = "피드 생성 성공",
+//                            value = "{ \"feedId\": 1, \"feedTitle\": \"오늘 운동\", \"feedContent\": \"가슴운동\" }"
+//                    )))
 
-    @PostMapping
-    public ResponseEntity<FeedResponseDTO> create(@RequestBody FeedCreateDTO dto) {
-        Long userId = 1L;
-        FeedResponseDTO response = feedService.createFeed(dto,userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<FeedResponseDTO> create(
+            @RequestPart("feed") FeedCreateDTO dto,
+            @RequestPart(value = "image", required = false) MultipartFile image) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+                    Long userId = 1L;
+        return ResponseEntity.ok(feedService.createFeed(dto, userId, image));
     }
 
     @Operation(summary = "제목으로 피드검색 API입니다.")
@@ -58,19 +65,19 @@ public class FeedController {
     }
 
     @Operation(summary = "피드 수정 API입니다.")
-    @PatchMapping("/{feedId}")
-    public ResponseEntity<Void> updateFeed(
+    @PatchMapping(value = "/{feedId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<FeedResponseDTO> updateFeed(
             @PathVariable Long feedId,
-            @RequestBody FeedUpdateDTO dto) {
+            @RequestPart("feed") FeedUpdateDTO dto,
+            @RequestPart(value = "image", required = false) MultipartFile newImage) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         Long userId = 1L; // 테스트용. 나중에 시큐리티나 세션에서 받아와야함
-        feedService.updateFeed(feedId, dto, userId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(feedService.updateFeed(feedId, dto, newImage, userId));
     }
 
     @Operation(summary = "피드 삭제 API입니다.")
     @ApiResponse(responseCode = "204", description = "삭제 성공")
     @DeleteMapping("/{feedId}")
-    public ResponseEntity<Void> delete(@PathVariable Long feedId) {
+    public ResponseEntity<Void> delete(@PathVariable Long feedId) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         Long userId = 1L; // 인증 붙기 전 테스트용
         feedService.deleteFeed(feedId, userId);
         return ResponseEntity.noContent().build(); // 204 반환
