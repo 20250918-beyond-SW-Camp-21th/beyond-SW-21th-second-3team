@@ -2,6 +2,7 @@ package com.team3.what_if_workout.report.service;
 
 import com.team3.what_if_workout.report.domain.Report;
 import com.team3.what_if_workout.report.repository.ReportRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ class ReportServiceTest {
 
     @Autowired
     private ReportRepository reportRepository;
+
+    @BeforeEach
+    void setUp() {
+        reportRepository.deleteAll();
+    }
 
     @DisplayName("지난 주 리포트 생성")
     @Test
@@ -50,13 +56,15 @@ class ReportServiceTest {
     void getReportsByUserId() {
         // given
         Long userId = 1L;
+        Integer plannedAmount = 1000;
+        Integer achievedAmount = 800;
+
+        reportService.createLastWeekReport(userId, plannedAmount, achievedAmount);
 
         // when
-        reportService.getReportsByUserId(userId);
+        List<Report> reports = reportService.getReportsByUserId(userId);
 
         // then
-        List<Report> reports = reportRepository.findByUserId(userId);
-
         assertFalse(reports.isEmpty(), "해당 아이디의 리포트가 존재하지 않습니다.");
         assertEquals(userId, reports.get(0).getUserId());
     }
@@ -65,7 +73,7 @@ class ReportServiceTest {
     @Test
     void getReportByDate() {
         // given
-        Long userId = 2L;
+        Long userId = 1L;
 
         LocalDate lastWeekStart = LocalDate.now()
                 .minusWeeks(1)
@@ -93,5 +101,30 @@ class ReportServiceTest {
         assertEquals(userId, foundReport.getUserId());
         assertEquals(lastWeekStart, foundReport.getStartDate());
         assertEquals(lastWeekEnd, foundReport.getEndDate());
+    }
+
+    @DisplayName("리포트 삭제")
+    @Test
+    void deleteReportById() {
+        // given
+        Long userId = 1L;
+
+        Report report = Report.builder()
+                .userId(userId)
+                .startDate(LocalDate.now().with(DayOfWeek.MONDAY))
+                .endDate(LocalDate.now().with(DayOfWeek.SUNDAY))
+                .plannedAmount(1000)
+                .achievedAmount(800)
+                .resultValue(200)
+                .build();
+
+        Report saved = reportRepository.save(report);
+        Long reportId = saved.getReportId();
+
+        // when
+        reportService.deleteReportById(userId, reportId);
+
+        // then
+        assertFalse(reportRepository.findById(reportId).isPresent(), "리포트가 삭제되지 않았습니다.");
     }
 }
