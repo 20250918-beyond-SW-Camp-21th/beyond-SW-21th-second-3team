@@ -1,9 +1,7 @@
 package com.team3.what_if_workout.notification.controller;
 
-import com.team3.what_if_workout.notification.domain.Notification;
 import com.team3.what_if_workout.notification.dto.request.NotificationDTO;
 import com.team3.what_if_workout.notification.service.NotificationService;
-import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

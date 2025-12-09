@@ -39,7 +39,9 @@ public class NotificationService {
         Notification notification = notificationRepository.findAllByUserIdAndCheckNotificationIsFalse(Id);
         notification.update(true);
     }
+
     public void deleteNotification(Long notificationId){
         notificationRepository.deleteById(notificationId);
     }
+
 }
