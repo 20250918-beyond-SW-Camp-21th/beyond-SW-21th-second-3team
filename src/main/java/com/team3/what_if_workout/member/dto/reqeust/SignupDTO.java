@@ -26,6 +26,4 @@ public record SignupDTO(
                 .goalsCalories(goalsCalories)
                 .build();
     }
-
-
 }
