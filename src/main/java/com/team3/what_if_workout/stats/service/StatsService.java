@@ -59,13 +59,13 @@ public class StatsService {
     }
 
     public List<TimeRankingDto> getTimeRankingByDate(LocalDate date) {
-        List<Stats> statsList = statsRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(date, date);
+        List<Stats> statsList = statsRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByTotalDurationDesc(date, date);
 
         return buildTimeRanking(statsList);
     }
 
     public List<CalorieRankingDto> getCalorieRankingByDate(LocalDate date) {
-        List<Stats> statsList = statsRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqual(date, date);
+        List<Stats> statsList = statsRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByTotalCaloriesDesc(date, date);
 
         return buildCalorieRanking(statsList);
     }
